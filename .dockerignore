@@ -1,0 +1,9 @@
+target/
+*.iml
+.idea/
+.vscode/
+.git/
+.gitignore
+*.log
+.mvn/wrapper/maven-wrapper.jar
+node_modules/

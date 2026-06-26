@@ -1,0 +1,4 @@
+Remaining items you may want:
+- Verify frontend builds: npm run build hasn't been run yet for the React app
+- Verify Docker compose works end-to-end: docker compose up has not been tested
+- Add environment variable template: .env.example for the required vars (JWT_SECRET, DB_PASSWORD, OPENAI_API_KEY, etc.)
