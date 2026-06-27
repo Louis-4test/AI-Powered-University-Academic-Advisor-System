@@ -15,6 +15,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import WorkIcon from '@mui/icons-material/Work';
 import DescriptionIcon from '@mui/icons-material/Description';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuth } from '../context/AuthContext';
 
@@ -25,6 +26,7 @@ const menuConfig = {
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin' },
     { text: 'Students', icon: <PeopleIcon />, path: '/admin/students' },
     { text: 'Courses', icon: <BookIcon />, path: '/admin/courses' },
+    { text: 'Timetable', icon: <CalendarMonthIcon />, path: '/admin/timetable' },
     { text: 'Lecturers', icon: <SchoolIcon />, path: '/admin/lecturers' },
     { text: 'Departments', icon: <DescriptionIcon />, path: '/admin/departments' },
     { text: 'AI Tools', icon: <SmartToyIcon />, path: '/ai' },
@@ -32,12 +34,14 @@ const menuConfig = {
   STUDENT: [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/student' },
     { text: 'My Courses', icon: <BookIcon />, path: '/student/courses' },
+    { text: 'Timetable', icon: <CalendarMonthIcon />, path: '/student/timetable' },
     { text: 'Results', icon: <AssignmentIcon />, path: '/student/results' },
     { text: 'AI Advisor', icon: <SmartToyIcon />, path: '/ai' },
   ],
   LECTURER: [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/lecturer' },
     { text: 'My Courses', icon: <BookIcon />, path: '/lecturer/courses' },
+    { text: 'Timetable', icon: <CalendarMonthIcon />, path: '/lecturer/timetable' },
     { text: 'Exam Generator', icon: <AssignmentIcon />, path: '/lecturer/exam-generator' },
     { text: 'Research Assistant', icon: <PsychologyIcon />, path: '/lecturer/research-assistant' },
     { text: 'AI Tools', icon: <SmartToyIcon />, path: '/ai' },

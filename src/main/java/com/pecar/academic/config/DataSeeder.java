@@ -1,6 +1,7 @@
 package com.pecar.academic.config;
 
 import com.pecar.academic.entity.*;
+import com.pecar.academic.entity.DayOfWeek;
 import com.pecar.academic.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -33,6 +35,7 @@ public class DataSeeder implements CommandLineRunner {
     private final CourseRepository     courseRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final GradeRepository      gradeRepository;
+    private final TimetableRepository  timetableRepository;
     private final PasswordEncoder      passwordEncoder;
 
     @Value("${app.seed.enabled:true}")
@@ -62,6 +65,7 @@ public class DataSeeder implements CommandLineRunner {
         List<Course> courses = seedCourses(departments, lecturers);
         List<Student> students = seedStudents(departments);
         seedEnrollmentsAndGrades(students, courses);
+        seedTimetableEntries(courses, lecturers, departments);
 
         log.info("Seeding complete: {} departments, {} lecturers, {} courses, {} students.",
                 departments.size(), lecturers.size(), courses.size(), students.size());
@@ -314,6 +318,52 @@ public class DataSeeder implements CommandLineRunner {
                 gradeRepository.save(grade);
             }
         }
+    }
+
+    // ── Timetable ───────────────────────────────────────────────────────────────
+
+    private void seedTimetableEntries(List<Course> courses, List<Lecturer> lecturers, List<Department> departments) {
+        if (timetableRepository.count() > 0) return;
+
+        Department cs = byCode(departments, "CS");
+
+        record TtSeed(String courseCode, DayOfWeek day, LocalTime start, LocalTime end, String room) {}
+        List<TtSeed> seeds = List.of(
+                new TtSeed("CS101", DayOfWeek.MONDAY,    LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 101"),
+                new TtSeed("CS201", DayOfWeek.MONDAY,    LocalTime.of(9, 45), LocalTime.of(11, 15), "Room 102"),
+                new TtSeed("CS301", DayOfWeek.TUESDAY,   LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 101"),
+                new TtSeed("CS302", DayOfWeek.TUESDAY,   LocalTime.of(11, 30),LocalTime.of(13, 0),  "Room 103"),
+                new TtSeed("CS401", DayOfWeek.WEDNESDAY, LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 101"),
+                new TtSeed("CS402", DayOfWeek.WEDNESDAY, LocalTime.of(9, 45), LocalTime.of(11, 15), "Room 102"),
+                new TtSeed("EE101", DayOfWeek.THURSDAY,  LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 201"),
+                new TtSeed("EE301", DayOfWeek.THURSDAY,  LocalTime.of(11, 30),LocalTime.of(13, 0),  "Room 202"),
+                new TtSeed("BA101", DayOfWeek.FRIDAY,    LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 301"),
+                new TtSeed("BA301", DayOfWeek.FRIDAY,    LocalTime.of(9, 45), LocalTime.of(11, 15), "Room 302"),
+                new TtSeed("MTH201", DayOfWeek.SATURDAY, LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 401"),
+                new TtSeed("MTH301", DayOfWeek.SATURDAY, LocalTime.of(9, 45), LocalTime.of(11, 15), "Room 402")
+        );
+
+        for (TtSeed s : seeds) {
+            Course course = courses.stream()
+                    .filter(c -> c.getCourseCode().equals(s.courseCode()))
+                    .findFirst().orElse(null);
+            if (course == null) continue;
+
+            TimetableEntry entry = TimetableEntry.builder()
+                    .course(course)
+                    .lecturer(course.getLecturer())
+                    .dayOfWeek(s.day())
+                    .startTime(s.start())
+                    .endTime(s.end())
+                    .room(s.room())
+                    .department(course.getDepartment())
+                    .academicYear(ACADEMIC_YEAR)
+                    .semester(course.getSemester())
+                    .build();
+            timetableRepository.save(entry);
+        }
+
+        log.info("Seeded {} timetable entries.", seeds.size());
     }
 
     // ── Helpers ────────────────────────────────────────────────────────────────

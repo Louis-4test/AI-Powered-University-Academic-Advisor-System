@@ -1,28 +1,17 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
     branches: [main]
 
-jobs:
-  backend:
-    runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: academic_advisor_db
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd "mysqladmin ping -h localhost"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 10
+env:
+  DOCKER_HUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
 
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -33,14 +22,10 @@ jobs:
           distribution: temurin
           cache: maven
 
-      - name: Backend tests
-        run: mvn test -Dspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect -Dspring.jpa.hibernate.ddl-auto=create-drop
-        working-directory: .
-        env:
-          DB_USERNAME: root
-          DB_PASSWORD: root
+      - name: Run tests
+        run: mvn -B clean test
 
-  frontend:
+  build-frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -59,3 +44,39 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: frontend
+
+  push-docker-images:
+    if: github.ref == 'refs/heads/main'
+    needs: [test-backend, build-frontend]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_HUB_USERNAME }}/academic-advisor-backend:latest,${{ env.DOCKER_HUB_USERNAME }}/academic-advisor-backend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: frontend/Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_HUB_USERNAME }}/academic-advisor-frontend:latest,${{ env.DOCKER_HUB_USERNAME }}/academic-advisor-frontend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
