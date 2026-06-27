@@ -12,13 +12,16 @@ import StudentCourses from './pages/student/Courses';
 import StudentResults from './pages/student/Results';
 import LecturerDashboard from './pages/lecturer/Dashboard';
 import LecturerCourses from './pages/lecturer/Courses';
+import LecturerTimetable from './pages/lecturer/Timetable';
 import LecturerExamGenerator from './pages/lecturer/ExamGenerator';
 import LecturerResearchAssistant from './pages/lecturer/ResearchAssistant';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminStudents from './pages/admin/Students';
 import AdminCourses from './pages/admin/Courses';
+import AdminTimetable from './pages/admin/Timetable';
 import AdminLecturers from './pages/admin/Lecturers';
 import AdminDepartments from './pages/admin/Departments';
+import StudentTimetable from './pages/student/Timetable';
 import AiOverview from './pages/ai/AiOverview';
 import AiChatbot from './pages/ai/Chatbot';
 import AiRiskPrediction from './pages/ai/RiskPrediction';
@@ -48,12 +51,14 @@ function App() {
             <Route element={<PrivateRoute roles={['STUDENT']}><Layout /></PrivateRoute>}>
               <Route path="/student" element={<StudentDashboard />} />
               <Route path="/student/courses" element={<StudentCourses />} />
+              <Route path="/student/timetable" element={<StudentTimetable />} />
               <Route path="/student/results" element={<StudentResults />} />
             </Route>
 
             <Route element={<PrivateRoute roles={['LECTURER']}><Layout /></PrivateRoute>}>
               <Route path="/lecturer" element={<LecturerDashboard />} />
               <Route path="/lecturer/courses" element={<LecturerCourses />} />
+              <Route path="/lecturer/timetable" element={<LecturerTimetable />} />
               <Route path="/lecturer/exam-generator" element={<LecturerExamGenerator />} />
               <Route path="/lecturer/research-assistant" element={<LecturerResearchAssistant />} />
             </Route>
@@ -62,6 +67,7 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/students" element={<AdminStudents />} />
               <Route path="/admin/courses" element={<AdminCourses />} />
+              <Route path="/admin/timetable" element={<AdminTimetable />} />
               <Route path="/admin/lecturers" element={<AdminLecturers />} />
               <Route path="/admin/departments" element={<AdminDepartments />} />
             </Route>
