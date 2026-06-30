@@ -41,6 +41,7 @@ const menuConfig = {
   LECTURER: [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/lecturer' },
     { text: 'My Courses', icon: <BookIcon />, path: '/lecturer/courses' },
+    { text: 'Students', icon: <PeopleIcon />, path: '/lecturer/students' },
     { text: 'Timetable', icon: <CalendarMonthIcon />, path: '/lecturer/timetable' },
     { text: 'Exam Generator', icon: <AssignmentIcon />, path: '/lecturer/exam-generator' },
     { text: 'Research Assistant', icon: <PsychologyIcon />, path: '/lecturer/research-assistant' },

@@ -37,6 +37,11 @@ services:
       JWT_SECRET: ${JWT_SECRET:-3a8f2b1c9d4e7f0a5b6c3d2e1f8a9b0c3a8f2b1c9d4e7f0a5b6c3d2e1f8a9b0c}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-your-api-key-here}
       SEED_ENABLED: ${SEED_ENABLED:-true}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+      MAIL_HOST: ${MAIL_HOST:-smtp.gmail.com}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
     ports:
       - "8080:8080"
     networks:

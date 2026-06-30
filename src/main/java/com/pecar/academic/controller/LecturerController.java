@@ -1,6 +1,7 @@
 package com.pecar.academic.controller;
 
 import com.pecar.academic.dto.LecturerDTO;
+import com.pecar.academic.dto.LecturerStudentDTO;
 import com.pecar.academic.service.LecturerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,11 @@ public class LecturerController {
     @GetMapping
     public ResponseEntity<List<LecturerDTO.Response>> getAll() {
         return ResponseEntity.ok(lecturerService.getAll());
+    }
+
+    @GetMapping("/me/students")
+    public ResponseEntity<List<LecturerStudentDTO>> getMyStudents(Authentication authentication) {
+        return ResponseEntity.ok(lecturerService.getStudentsByLecturerEmail(authentication.getName()));
     }
 
     @GetMapping("/search")

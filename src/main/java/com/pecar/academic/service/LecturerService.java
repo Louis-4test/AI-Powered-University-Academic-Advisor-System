@@ -1,11 +1,15 @@
 package com.pecar.academic.service;
 
 import com.pecar.academic.dto.LecturerDTO;
+import com.pecar.academic.dto.LecturerStudentDTO;
 import com.pecar.academic.entity.*;
 import com.pecar.academic.exception.DuplicateResourceException;
 import com.pecar.academic.exception.ResourceNotFoundException;
+import com.pecar.academic.repository.CourseRepository;
 import com.pecar.academic.repository.DepartmentRepository;
+import com.pecar.academic.repository.EnrollmentRepository;
 import com.pecar.academic.repository.LecturerRepository;
+import com.pecar.academic.repository.StudentRepository;
 import com.pecar.academic.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +27,9 @@ public class LecturerService {
     private final LecturerRepository   lecturerRepository;
     private final UserRepository       userRepository;
     private final DepartmentRepository departmentRepository;
+    private final CourseRepository     courseRepository;
+    private final EnrollmentRepository enrollmentRepository;
+    private final StudentRepository    studentRepository;
     private final PasswordEncoder      passwordEncoder;
 
     @Transactional
@@ -118,6 +125,37 @@ public class LecturerService {
         lecturer.getCourses().forEach(c -> c.setLecturer(null));
 
         lecturerRepository.delete(lecturer);
+    }
+
+    public List<LecturerStudentDTO> getStudentsByLecturerEmail(String email) {
+        Lecturer lecturer = lecturerRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("No lecturer record found for " + email));
+
+        List<Course> courses = courseRepository.findByLecturerId(lecturer.getId());
+
+        if (courses.isEmpty()) return List.of();
+
+        List<Long> courseIds = courses.stream().map(Course::getId).toList();
+        List<Enrollment> enrollments = enrollmentRepository.findByCourseIdIn(courseIds);
+
+        return enrollments.stream()
+                .filter(e -> e.getStatus() == Enrollment.EnrollmentStatus.ENROLLED)
+                .map(e -> LecturerStudentDTO.builder()
+                        .studentId(e.getStudent().getId())
+                        .studentNumber(e.getStudent().getStudentId())
+                        .fullName(e.getStudent().getFullName())
+                        .email(e.getStudent().getEmail())
+                        .currentLevel(e.getStudent().getCurrentLevel())
+                        .programName(e.getStudent().getProgramName())
+                        .departmentName(e.getStudent().getDepartment() != null
+                                ? e.getStudent().getDepartment().getName() : null)
+                        .courseId(e.getCourse().getId())
+                        .courseCode(e.getCourse().getCourseCode())
+                        .courseTitle(e.getCourse().getTitle())
+                        .academicYear(e.getAcademicYear())
+                        .semester(e.getSemester())
+                        .build())
+                .toList();
     }
 
     private Lecturer findById(Long id) {

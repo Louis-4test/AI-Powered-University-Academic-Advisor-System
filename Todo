@@ -1,4 +1,17 @@
+Completed:
+- CI/CD pipeline (`.github/workflows/ci.yml`) — builds & pushes Docker images on push to main
+- Generate Timetable feature (Course Module):
+  - Backend: TimetableEntry entity, repository, DTOs, service, controller
+  - Frontend: Admin timetable management (CRUD + auto-generate), student/lecturer weekly view
+  - Seed data with 12 timetable entries across all departments
+
 Remaining items you may want:
-- Verify frontend builds: npm run build hasn't been run yet for the React app
 - Verify Docker compose works end-to-end: docker compose up has not been tested
-- Add environment variable template: .env.example for the required vars (JWT_SECRET, DB_PASSWORD, OPENAI_API_KEY, etc.)
+- Verify frontend build works for production
+- Forgot Password page (per requirements doc)
+- Lecturer "Students" view (per requirements doc)
+- Gemini API integration (listed in requirements + .env.example but not wired)
+- Hugging Face Models integration (listed in requirements)
+- RAG System (Bonus feature per requirements doc)
+- Cloud deployment (AWS/Azure per requirements doc)
+- Student Dashboard direct link to Career Recommendations
