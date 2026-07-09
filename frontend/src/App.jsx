@@ -31,6 +31,7 @@ import AiRiskPrediction from './pages/ai/RiskPrediction';
 import AiCareerRecommendation from './pages/ai/CareerRecommendation';
 import AiResearchAssistant from './pages/ai/ResearchAssistant';
 import AiExamGenerator from './pages/ai/ExamGenerator';
+import AiRag from './pages/ai/Rag';
 
 function HomeRedirect() {
   const { user } = useAuth();
@@ -85,6 +86,7 @@ function App() {
               <Route path="/ai/career" element={<AiCareerRecommendation />} />
               <Route path="/ai/research-assistant" element={<AiResearchAssistant />} />
               <Route path="/ai/exam-generator" element={<AiExamGenerator />} />
+              <Route path="/ai/rag" element={<AiRag />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

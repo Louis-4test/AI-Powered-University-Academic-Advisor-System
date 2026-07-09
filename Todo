@@ -4,14 +4,15 @@ Completed:
   - Backend: TimetableEntry entity, repository, DTOs, service, controller
   - Frontend: Admin timetable management (CRUD + auto-generate), student/lecturer weekly view
   - Seed data with 12 timetable entries across all departments
+- Forgot Password / Reset Password pages (frontend + backend)
+- Lecturer "Students" view (frontend + backend)
+- Gemini API integration:
+  - Added `spring-ai-google-genai` dependency (Spring AI 1.1.8)
+  - Configurable provider selection via `spring.ai.model.chat=openai|google-genai`
+  - AiChatConfig creates provider-specific ChatClient based on property
+  - Gemini config with GEMINI_API_KEY env var support
+  - docker-compose updated to pass GEMINI_API_KEY
 
 Remaining items you may want:
-- Verify Docker compose works end-to-end: docker compose up has not been tested
-- Verify frontend build works for production
-- Forgot Password page (per requirements doc)
-- Lecturer "Students" view (per requirements doc)
-- Gemini API integration (listed in requirements + .env.example but not wired)
-- Hugging Face Models integration (listed in requirements)
 - RAG System (Bonus feature per requirements doc)
 - Cloud deployment (AWS/Azure per requirements doc)
-- Student Dashboard direct link to Career Recommendations

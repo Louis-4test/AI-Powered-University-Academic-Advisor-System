@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  Grid, Card, CardContent, Typography, CircularProgress, Box, Chip,
+  Grid, Card, CardContent, Typography, CircularProgress, Box, Chip, Button,
 } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import StarsIcon from '@mui/icons-material/Stars';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import { getMyProfile } from '../../api/students';
 import { getCgpa, getPerformanceTrend } from '../../api/grades';
 
 export default function StudentDashboard() {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [cgpa, setCgpa] = useState(null);
   const [trend, setTrend] = useState([]);
@@ -95,6 +98,29 @@ export default function StudentDashboard() {
                 </Box>
               </Box>
               <Typography mt={1}><strong>Enrolled:</strong> {profile.enrollmentYear}</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Card
+            sx={{ cursor: 'pointer', '&:hover': { boxShadow: 6 } }}
+            onClick={() => navigate('/ai/career')}
+          >
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={2}>
+                <RocketLaunchIcon color="secondary" sx={{ fontSize: 40 }} />
+                <Box>
+                  <Typography color="text.secondary" variant="body2">AI Feature</Typography>
+                  <Typography variant="h6">Career Recommendations</Typography>
+                </Box>
+              </Box>
+              <Typography mt={1}>
+                Get AI-powered career suggestions based on your academic profile and skills.
+              </Typography>
+              <Button variant="outlined" size="small" sx={{ mt: 1.5 }}>
+                Explore Careers
+              </Button>
             </CardContent>
           </Card>
         </Grid>

@@ -5,6 +5,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import WorkIcon from '@mui/icons-material/Work';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const tools = [
   { title: 'Academic Chatbot', desc: 'Ask academic questions and get AI-powered answers', icon: <SmartToyIcon sx={{ fontSize: 48 }} />, path: '/ai/chatbot', color: '#1565c0' },
@@ -12,6 +13,7 @@ const tools = [
   { title: 'Career Recommendation', desc: 'Get personalized career recommendations', icon: <WorkIcon sx={{ fontSize: 48 }} />, path: '/ai/career', color: '#2e7d32' },
   { title: 'Research Assistant', desc: 'Analyze research papers with AI', icon: <PsychologyIcon sx={{ fontSize: 48 }} />, path: '/ai/research-assistant', color: '#6a1b9a' },
   { title: 'Exam Generator', desc: 'Generate exam questions from any topic', icon: <AssignmentIcon sx={{ fontSize: 48 }} />, path: '/ai/exam-generator', color: '#c62828' },
+  { title: 'RAG Knowledge Base', desc: 'Upload documents and ask AI-powered questions with source citations', icon: <MenuBookIcon sx={{ fontSize: 48 }} />, path: '/ai/rag', color: '#1565c0' },
 ];
 
 export default function AiOverview() {
