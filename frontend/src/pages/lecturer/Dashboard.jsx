@@ -38,7 +38,7 @@ export default function LecturerDashboard() {
 
       <Grid container spacing={3} mb={3}>
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card sx={{ bgcolor: '#e3f2fd', borderLeft: '4px solid #90caf9', boxShadow: 'none' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
                 <PeopleIcon color="primary" sx={{ fontSize: 40 }} />
@@ -55,7 +55,7 @@ export default function LecturerDashboard() {
           </Card>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card sx={{ bgcolor: '#f3e5f5', borderLeft: '4px solid #ce93d8', boxShadow: 'none' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
                 <BookIcon color="secondary" sx={{ fontSize: 40 }} />

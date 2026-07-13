@@ -39,7 +39,7 @@ export default function StudentResults() {
 
       <Grid container spacing={2} mb={3}>
         <Grid item xs={12} sm={6} md={3}>
-          <Card><CardContent>
+          <Card sx={{ bgcolor: '#e3f2fd', borderLeft: '4px solid #90caf9', boxShadow: 'none' }}><CardContent>
             <Typography color="text.secondary" variant="body2">CGPA</Typography>
             <Typography variant="h4" fontWeight="bold" color="primary">{cgpa?.toFixed(2) || 'N/A'}</Typography>
           </CardContent></Card>
