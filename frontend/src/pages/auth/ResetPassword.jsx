@@ -44,7 +44,7 @@ export default function ResetPassword() {
 
   if (!token) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f5f5">
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', bgcolor: '#f5f5f5' }}>
         <Card sx={{ maxWidth: 420, width: '100%', mx: 2 }}>
           <CardContent sx={{ p: 4 }}>
             <Alert severity="error">Invalid reset link. No token provided.</Alert>
@@ -58,7 +58,7 @@ export default function ResetPassword() {
   }
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f5f5">
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', bgcolor: '#f5f5f5' }}>
       <Card sx={{ maxWidth: 420, width: '100%', mx: 2 }}>
         <CardContent sx={{ p: 4 }}>
           <Typography variant="h4" fontWeight="bold" gutterBottom align="center" color="primary">

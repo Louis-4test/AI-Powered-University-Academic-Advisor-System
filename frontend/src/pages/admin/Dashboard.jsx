@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-  Grid, Card, CardContent, Typography, CircularProgress, Box,
+  Card, CardContent, Typography, CircularProgress, Box,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
@@ -38,32 +38,30 @@ export default function AdminDashboard() {
   if (loading) return <CircularProgress />;
 
   const statCards = [
-    { label: 'Students', value: stats.students, icon: <PeopleIcon sx={{ fontSize: 40 }} />, color: '#1565c0' },
-    { label: 'Courses', value: stats.courses, icon: <BookIcon sx={{ fontSize: 40 }} />, color: '#2e7d32' },
-    { label: 'Lecturers', value: stats.lecturers, icon: <SchoolIcon sx={{ fontSize: 40 }} />, color: '#6a1b9a' },
-    { label: 'Departments', value: stats.departments, icon: <BusinessIcon sx={{ fontSize: 40 }} />, color: '#e65100' },
+    { label: 'Students', value: stats.students, icon: <PeopleIcon sx={{ fontSize: 40 }} />, color: '#1565c0', bgColor: '#e3f2fd', borderColor: '#90caf9' },
+    { label: 'Courses', value: stats.courses, icon: <BookIcon sx={{ fontSize: 40 }} />, color: '#2e7d32', bgColor: '#e8f5e9', borderColor: '#a5d6a7' },
+    { label: 'Lecturers', value: stats.lecturers, icon: <SchoolIcon sx={{ fontSize: 40 }} />, color: '#6a1b9a', bgColor: '#f3e5f5', borderColor: '#ce93d8' },
+    { label: 'Departments', value: stats.departments, icon: <BusinessIcon sx={{ fontSize: 40 }} />, color: '#e65100', bgColor: '#fff3e0', borderColor: '#ffcc80' },
   ];
 
   return (
     <Box>
       <Typography variant="h4" fontWeight="bold" gutterBottom>Admin Dashboard</Typography>
-      <Grid container spacing={3} mb={3}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 3, mb: 3, flexWrap: 'wrap' }}>
         {statCards.map((card) => (
-          <Grid item xs={12} sm={6} md={3} key={card.label}>
-            <Card>
-              <CardContent>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Typography color={card.color}>{card.icon}</Typography>
-                  <Box>
-                    <Typography variant="h4" fontWeight="bold">{card.value}</Typography>
-                    <Typography color="text.secondary">{card.label}</Typography>
-                  </Box>
+          <Card key={card.label} sx={{ flex: '1 1 0', bgcolor: card.bgColor, borderLeft: `4px solid ${card.borderColor}`, boxShadow: 'none' }}>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={2}>
+                <Typography color={card.color}>{card.icon}</Typography>
+                <Box>
+                  <Typography variant="h4" fontWeight="bold">{card.value}</Typography>
+                  <Typography color="text.secondary">{card.label}</Typography>
                 </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+              </Box>
+            </CardContent>
+          </Card>
         ))}
-      </Grid>
+      </Box>
 
       {ranking.length > 0 && (
         <Box>

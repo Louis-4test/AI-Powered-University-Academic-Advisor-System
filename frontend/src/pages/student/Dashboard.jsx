@@ -53,7 +53,7 @@ export default function StudentDashboard() {
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
-          <Card>
+          <Card sx={{ bgcolor: '#e3f2fd', borderLeft: '4px solid #90caf9', boxShadow: 'none' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
                 <SchoolIcon color="primary" sx={{ fontSize: 40 }} />
@@ -72,7 +72,7 @@ export default function StudentDashboard() {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Card>
+          <Card sx={{ bgcolor: '#f3e5f5', borderLeft: '4px solid #ce93d8', boxShadow: 'none' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
                 <StarsIcon color="secondary" sx={{ fontSize: 40 }} />
@@ -88,7 +88,7 @@ export default function StudentDashboard() {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Card>
+          <Card sx={{ bgcolor: '#e8f5e9', borderLeft: '4px solid #a5d6a7', boxShadow: 'none' }}>
             <CardContent>
               <Box display="flex" alignItems="center" gap={2}>
                 <TrendingUpIcon color="success" sx={{ fontSize: 40 }} />
@@ -104,7 +104,7 @@ export default function StudentDashboard() {
 
         <Grid item xs={12} md={4}>
           <Card
-            sx={{ cursor: 'pointer', '&:hover': { boxShadow: 6 } }}
+            sx={{ bgcolor: '#ede7f6', borderLeft: '4px solid #b39ddb', cursor: 'pointer', '&:hover': { boxShadow: 6 } }}
             onClick={() => navigate('/ai/career')}
           >
             <CardContent>
@@ -127,7 +127,7 @@ export default function StudentDashboard() {
 
         {trend.length > 0 && (
           <Grid item xs={12}>
-            <Card>
+            <Card sx={{ bgcolor: '#e0f7fa', borderLeft: '4px solid #80deea', boxShadow: 'none' }}>
               <CardContent>
                 <Typography variant="h6" gutterBottom>Performance Trend</Typography>
                 {trend.map((t, i) => (
