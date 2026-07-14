@@ -21,6 +21,7 @@ public class CourseService {
     private final DepartmentRepository  departmentRepository;
     private final LecturerRepository    lecturerRepository;
     private final EnrollmentRepository  enrollmentRepository;
+    private final TimetableRepository   timetableRepository;
 
     @Transactional
     public CourseDTO.Response createCourse(CourseDTO.Request req) {
@@ -120,7 +121,9 @@ public class CourseService {
 
     @Transactional
     public void deleteCourse(Long id) {
-        courseRepository.delete(findById(id));
+        Course course = findById(id);
+        timetableRepository.deleteByCourseId(course.getId());
+        courseRepository.delete(course);
     }
 
     private Course findById(Long id) {

@@ -10,6 +10,7 @@ import com.pecar.academic.repository.DepartmentRepository;
 import com.pecar.academic.repository.EnrollmentRepository;
 import com.pecar.academic.repository.LecturerRepository;
 import com.pecar.academic.repository.StudentRepository;
+import com.pecar.academic.repository.TimetableRepository;
 import com.pecar.academic.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,7 @@ public class LecturerService {
     private final CourseRepository     courseRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final StudentRepository    studentRepository;
+    private final TimetableRepository  timetableRepository;
     private final PasswordEncoder      passwordEncoder;
 
     @Transactional
@@ -120,9 +122,16 @@ public class LecturerService {
     public void delete(Long id) {
         Lecturer lecturer = findById(id);
 
-        // Deleting a lecturer must never delete the courses they taught —
-        // unassign the lecturer from each course instead.
+        // Delete timetable entries that reference this lecturer
+        timetableRepository.deleteByLecturerId(lecturer.getId());
+
+        // Unassign the lecturer from each course instead of deleting courses
         lecturer.getCourses().forEach(c -> c.setLecturer(null));
+
+        // Delete linked user account
+        if (lecturer.getUser() != null) {
+            userRepository.delete(lecturer.getUser());
+        }
 
         lecturerRepository.delete(lecturer);
     }

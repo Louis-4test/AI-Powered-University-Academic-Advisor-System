@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions,
   TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, IconButton, CircularProgress, Alert, Chip, MenuItem,
+  Paper, IconButton, CircularProgress, Alert, Chip, MenuItem, Grid,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -96,29 +96,55 @@ export default function AdminStudents() {
         </Table>
       </TableContainer>
 
-      <Dialog open={dialog} onClose={() => setDialog(false)} maxWidth="sm" fullWidth>
+      <Dialog open={dialog} onClose={() => setDialog(false)} maxWidth="lg" fullWidth>
         <DialogTitle>{editing ? 'Edit Student' : 'Add Student'}</DialogTitle>
-        <DialogContent>
-          <Box display="flex" flexDirection="column" gap={2} mt={1}>
-            <TextField label="First Name" value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} required />
-            <TextField label="Last Name" value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} required />
-            <TextField label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-            <TextField label="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-            <TextField label="Date of Birth" type="date" value={form.dateOfBirth} onChange={(e) => setForm({ ...form, dateOfBirth: e.target.value })} InputLabelProps={{ shrink: true }} />
-            <TextField label="Enrollment Year" type="number" value={form.enrollmentYear} onChange={(e) => setForm({ ...form, enrollmentYear: Number(e.target.value) })} />
-            <TextField label="Current Level" type="number" value={form.currentLevel} onChange={(e) => setForm({ ...form, currentLevel: Number(e.target.value) })} />
-            <TextField label="Program Name" value={form.programName} onChange={(e) => setForm({ ...form, programName: e.target.value })} />
-            <TextField select label="Department" value={form.departmentId} onChange={(e) => setForm({ ...form, departmentId: e.target.value })}>
-              {departments.map((d) => <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>)}
-            </TextField>
-            {!editing && <TextField label="Password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />}
-            {editing && <TextField select label="Status" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
-              <MenuItem value="ACTIVE">Active</MenuItem>
-              <MenuItem value="SUSPENDED">Suspended</MenuItem>
-              <MenuItem value="GRADUATED">Graduated</MenuItem>
-              <MenuItem value="WITHDRAWN">Withdrawn</MenuItem>
-            </TextField>}
-          </Box>
+        <DialogContent sx={{ maxHeight: '80vh', pt: '16px !important' }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField label="First Name" value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} required fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Last Name" value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} required fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Date of Birth" type="date" value={form.dateOfBirth} onChange={(e) => setForm({ ...form, dateOfBirth: e.target.value })} InputLabelProps={{ shrink: true }} fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Enrollment Year" type="number" value={form.enrollmentYear} onChange={(e) => setForm({ ...form, enrollmentYear: Number(e.target.value) })} fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Current Level" type="number" value={form.currentLevel} onChange={(e) => setForm({ ...form, currentLevel: Number(e.target.value) })} fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Program Name" value={form.programName} onChange={(e) => setForm({ ...form, programName: e.target.value })} fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField select label="Department" value={form.departmentId} onChange={(e) => setForm({ ...form, departmentId: e.target.value })} fullWidth size="small">
+                {departments.map((d) => <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>)}
+              </TextField>
+            </Grid>
+            {!editing && (
+              <Grid item xs={12}>
+                <TextField label="Password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth size="small" />
+              </Grid>
+            )}
+            {editing && (
+              <Grid item xs={12}>
+                <TextField select label="Status" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} fullWidth size="small">
+                  <MenuItem value="ACTIVE">Active</MenuItem>
+                  <MenuItem value="SUSPENDED">Suspended</MenuItem>
+                  <MenuItem value="GRADUATED">Graduated</MenuItem>
+                  <MenuItem value="WITHDRAWN">Withdrawn</MenuItem>
+                </TextField>
+              </Grid>
+            )}
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialog(false)}>Cancel</Button>
