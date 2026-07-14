@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions,
   TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, IconButton, CircularProgress, Alert, MenuItem,
+  Paper, IconButton, CircularProgress, Alert, MenuItem, Grid,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -100,27 +100,43 @@ export default function AdminCourses() {
         </Table>
       </TableContainer>
 
-      <Dialog open={dialog} onClose={() => setDialog(false)} maxWidth="sm" fullWidth>
+      <Dialog open={dialog} onClose={() => setDialog(false)} maxWidth="lg" fullWidth>
         <DialogTitle>{editing ? 'Edit Course' : 'Add Course'}</DialogTitle>
-        <DialogContent>
-          <Box display="flex" flexDirection="column" gap={2} mt={1}>
-            <TextField label="Course Code" value={form.courseCode} onChange={(e) => setForm({ ...form, courseCode: e.target.value })} required />
-            <TextField label="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
-            <TextField label="Description" multiline rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
-            <TextField label="Credit Hours" type="number" value={form.creditHours} onChange={(e) => setForm({ ...form, creditHours: Number(e.target.value) })} />
-            <TextField label="Level" type="number" value={form.level} onChange={(e) => setForm({ ...form, level: Number(e.target.value) })} />
-            <TextField select label="Semester" value={form.semester} onChange={(e) => setForm({ ...form, semester: e.target.value })}>
-              <MenuItem value="FIRST">First</MenuItem>
-              <MenuItem value="SECOND">Second</MenuItem>
-            </TextField>
-            <TextField select label="Department" value={form.departmentId} onChange={(e) => setForm({ ...form, departmentId: e.target.value })}>
-              {departments.map((d) => <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>)}
-            </TextField>
-            <TextField select label="Lecturer" value={form.lecturerId} onChange={(e) => setForm({ ...form, lecturerId: e.target.value })}>
-              <MenuItem value="">None</MenuItem>
-              {lecturers.map((l) => <MenuItem key={l.id} value={l.id}>{l.fullName}</MenuItem>)}
-            </TextField>
-          </Box>
+        <DialogContent sx={{ maxHeight: '80vh', pt: '16px !important' }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField label="Course Code" value={form.courseCode} onChange={(e) => setForm({ ...form, courseCode: e.target.value })} required fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Description" multiline rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Credit Hours" type="number" value={form.creditHours} onChange={(e) => setForm({ ...form, creditHours: Number(e.target.value) })} fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField label="Level" type="number" value={form.level} onChange={(e) => setForm({ ...form, level: Number(e.target.value) })} fullWidth size="small" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField select label="Semester" value={form.semester} onChange={(e) => setForm({ ...form, semester: e.target.value })} fullWidth size="small">
+                <MenuItem value="FIRST">First</MenuItem>
+                <MenuItem value="SECOND">Second</MenuItem>
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField select label="Department" value={form.departmentId} onChange={(e) => setForm({ ...form, departmentId: e.target.value })} fullWidth size="small">
+                {departments.map((d) => <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>)}
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField select label="Lecturer" value={form.lecturerId} onChange={(e) => setForm({ ...form, lecturerId: e.target.value })} fullWidth size="small">
+                <MenuItem value="">None</MenuItem>
+                {lecturers.map((l) => <MenuItem key={l.id} value={l.id}>{l.fullName}</MenuItem>)}
+              </TextField>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialog(false)}>Cancel</Button>

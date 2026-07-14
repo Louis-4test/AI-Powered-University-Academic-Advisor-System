@@ -5,6 +5,7 @@ import com.pecar.academic.entity.Department;
 import com.pecar.academic.exception.DuplicateResourceException;
 import com.pecar.academic.exception.ResourceNotFoundException;
 import com.pecar.academic.repository.DepartmentRepository;
+import com.pecar.academic.repository.TimetableRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final TimetableRepository  timetableRepository;
 
     @Transactional
     public DepartmentDTO.Response create(DepartmentDTO.Request req) {
@@ -67,9 +69,10 @@ public class DepartmentService {
     public void delete(Long id) {
         Department dept = findById(id);
 
-        // Deleting a department must never delete the people/courses in it —
-        // unassign them first so the FK constraint doesn't block the delete
-        // and so no student/lecturer/course record is lost.
+        // Delete timetable entries that reference this department
+        timetableRepository.deleteByDepartmentId(dept.getId());
+
+        // Unassign people/courses from this department so the FK constraint doesn't block the delete
         dept.getStudents().forEach(s -> s.setDepartment(null));
         dept.getLecturers().forEach(l -> l.setDepartment(null));
         dept.getCourses().forEach(c -> c.setDepartment(null));

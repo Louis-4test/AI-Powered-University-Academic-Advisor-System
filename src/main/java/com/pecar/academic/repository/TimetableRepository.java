@@ -26,4 +26,8 @@ public interface TimetableRepository extends JpaRepository<TimetableEntry, Long>
             Long departmentId, String academicYear, String semester);
 
     void deleteByCourseId(Long courseId);
+
+    void deleteByLecturerId(Long lecturerId);
+
+    void deleteByDepartmentId(Long departmentId);
 }

@@ -151,6 +151,9 @@ public class StudentService {
     @Transactional
     public void deleteStudent(Long id) {
         Student student = findById(id);
+        if (student.getUser() != null) {
+            userRepository.delete(student.getUser());
+        }
         studentRepository.delete(student);
     }
 
