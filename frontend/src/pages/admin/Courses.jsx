@@ -22,6 +22,8 @@ export default function AdminCourses() {
   const [form, setForm] = useState(emptyCourse);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [searchName, setSearchName] = useState('');
+  const [searchDept, setSearchDept] = useState('');
 
   const fetchData = async () => {
     try {
@@ -56,6 +58,12 @@ export default function AdminCourses() {
 
   if (loading) return <CircularProgress />;
 
+  const filteredCourses = courses.filter((c) => {
+    const matchesName = !searchName || c.title?.toLowerCase().includes(searchName.toLowerCase()) || c.courseCode?.toLowerCase().includes(searchName.toLowerCase());
+    const matchesDept = !searchDept || String(c.departmentId) === searchDept;
+    return matchesName && matchesDept;
+  });
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -63,6 +71,27 @@ export default function AdminCourses() {
         <Button variant="contained" startIcon={<AddIcon />} onClick={openCreate}>Add Course</Button>
       </Box>
       {error && <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError('')}>{error}</Alert>}
+
+      <Box display="flex" gap={2} mb={2}>
+        <TextField
+          placeholder="Search by title or code..."
+          size="small"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          sx={{ minWidth: 250 }}
+        />
+        <TextField
+          select
+          size="small"
+          label="Department"
+          value={searchDept}
+          onChange={(e) => setSearchDept(e.target.value)}
+          sx={{ minWidth: 200 }}
+        >
+          <MenuItem value="">All Departments</MenuItem>
+          {departments.map((d) => <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>)}
+        </TextField>
+      </Box>
 
       <TableContainer component={Paper}>
         <Table>
@@ -80,7 +109,7 @@ export default function AdminCourses() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses.map((c) => (
+            {filteredCourses.map((c) => (
               <TableRow key={c.id}>
                 <TableCell>{c.courseCode}</TableCell>
                 <TableCell>{c.title}</TableCell>

@@ -20,17 +20,14 @@ export default function StudentDashboard() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const [profRes, cgpaRes, trendRes] = await Promise.all([
-          getMyProfile(),
-          getCgpa(null).catch(() => ({ data: { cgpa: 0 } })),
-          getPerformanceTrend(null).catch(() => ({ data: [] })),
-        ]);
+        const profRes = await getMyProfile();
         const studentId = profRes.data.id;
+        setProfile(profRes.data);
+
         const [cgpaData, trendData] = await Promise.all([
           getCgpa(studentId),
           getPerformanceTrend(studentId),
         ]);
-        setProfile(profRes.data);
         setCgpa(cgpaData.data.cgpa);
         setTrend(trendData.data);
       } catch (err) {

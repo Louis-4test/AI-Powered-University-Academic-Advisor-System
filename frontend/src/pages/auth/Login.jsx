@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box, Card, CardContent, TextField, Button, Typography, Alert, CircularProgress,
+  InputAdornment, IconButton,
 } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useAuth } from '../../context/AuthContext';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -16,6 +20,12 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (!email.trim() || !password.trim()) {
+      setError('Email and password are required');
+      return;
+    }
+
     setLoading(true);
     try {
       const data = await login(email, password);
@@ -24,7 +34,7 @@ export default function Login() {
       else if (role === 'STUDENT') navigate('/student');
       else if (role === 'LECTURER') navigate('/lecturer');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.message || 'Invalid email or password');
     } finally {
       setLoading(false);
     }
@@ -45,10 +55,22 @@ export default function Login() {
             <TextField
               fullWidth label="Email" type="email" margin="normal" required
               value={email} onChange={(e) => setEmail(e.target.value)}
+              error={!!error && !email.trim()}
             />
             <TextField
-              fullWidth label="Password" type="password" margin="normal" required
+              fullWidth label="Password" margin="normal" required
+              type={showPassword ? 'text' : 'password'}
               value={password} onChange={(e) => setPassword(e.target.value)}
+              error={!!error && !password.trim()}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" size="small">
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               fullWidth type="submit" variant="contained" size="large"

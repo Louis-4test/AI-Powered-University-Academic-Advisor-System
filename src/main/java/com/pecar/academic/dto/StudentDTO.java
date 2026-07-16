@@ -102,5 +102,6 @@ public class StudentDTO {
         private Integer currentLevel;
         private Student.StudentStatus status;
         private Double cgpa;
+        private Long departmentId;
     }
 }

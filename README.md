@@ -9,7 +9,7 @@ A full-stack academic management system with AI capabilities — providing stude
 | Backend   | Java 21, Spring Boot 3.5.13, Spring AI 1.0.9, Spring Security  |
 | Frontend  | React 18, Vite 5, MUI 6, Axios, React Router v6                |
 | Database  | MySQL 8                                                        |
-| AI        | OpenAI (GPT-4o-mini), Gemini, Hugging Face                     |
+| AI        | OpenAI (GPT-4o-mini), Gemini (Google GenAI)                     |
 | Testing   | JUnit 5, Mockito, Spring Test                                  |
 | Infra     | Docker, Docker Compose, GitHub Actions                         |
 

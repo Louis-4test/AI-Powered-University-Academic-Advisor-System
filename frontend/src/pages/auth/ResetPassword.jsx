@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Box, Card, CardContent, TextField, Button, Typography, Alert, CircularProgress,
+  InputAdornment, IconButton,
 } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { resetPassword as resetPasswordApi } from '../../api/auth';
 
 export default function ResetPassword() {
@@ -10,6 +13,8 @@ export default function ResetPassword() {
   const token = searchParams.get('token');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,6 +24,16 @@ export default function ResetPassword() {
     e.preventDefault();
     setError('');
     setMessage('');
+
+    if (!newPassword.trim()) {
+      setError('Password is required');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
 
     if (newPassword !== confirmPassword) {
       setError('Passwords do not match');
@@ -71,12 +86,32 @@ export default function ResetPassword() {
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
-              fullWidth label="New Password" type="password" margin="normal" required
+              fullWidth label="New Password" margin="normal" required
+              type={showPassword ? 'text' : 'password'}
               value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" size="small">
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
-              fullWidth label="Confirm Password" type="password" margin="normal" required
+              fullWidth label="Confirm Password" margin="normal" required
+              type={showConfirm ? 'text' : 'password'}
               value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowConfirm(!showConfirm)} edge="end" size="small">
+                      {showConfirm ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               fullWidth type="submit" variant="contained" size="large"

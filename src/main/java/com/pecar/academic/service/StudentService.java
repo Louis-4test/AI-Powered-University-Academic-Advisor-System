@@ -206,6 +206,7 @@ public class StudentService {
                 .currentLevel(s.getCurrentLevel())
                 .status(s.getStatus())
                 .cgpa(getCgpa(s.getId()))
+                .departmentId(s.getDepartment() != null ? s.getDepartment().getId() : null)
                 .build();
     }
 }

@@ -1,12 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions,
   TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, IconButton, CircularProgress, Alert, Chip, MenuItem, Grid,
+  InputAdornment,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { getStudents, createStudent, updateStudent, deleteStudent } from '../../api/students';
 import { getDepartments } from '../../api/departments';
 
@@ -20,6 +24,9 @@ export default function AdminStudents() {
   const [form, setForm] = useState(emptyStudent);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [searchName, setSearchName] = useState('');
+  const [searchDept, setSearchDept] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -56,6 +63,12 @@ export default function AdminStudents() {
 
   if (loading) return <CircularProgress />;
 
+  const filteredStudents = students.filter((s) => {
+    const matchesName = !searchName || s.fullName?.toLowerCase().includes(searchName.toLowerCase()) || s.email?.toLowerCase().includes(searchName.toLowerCase());
+    const matchesDept = !searchDept || String(s.departmentId) === searchDept;
+    return matchesName && matchesDept;
+  });
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -63,6 +76,27 @@ export default function AdminStudents() {
         <Button variant="contained" startIcon={<AddIcon />} onClick={openCreate}>Add Student</Button>
       </Box>
       {error && <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError('')}>{error}</Alert>}
+
+      <Box display="flex" gap={2} mb={2}>
+        <TextField
+          placeholder="Search by name or email..."
+          size="small"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          sx={{ minWidth: 250 }}
+        />
+        <TextField
+          select
+          size="small"
+          label="Department"
+          value={searchDept}
+          onChange={(e) => setSearchDept(e.target.value)}
+          sx={{ minWidth: 200 }}
+        >
+          <MenuItem value="">All Departments</MenuItem>
+          {departments.map((d) => <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>)}
+        </TextField>
+      </Box>
 
       <TableContainer component={Paper}>
         <Table>
@@ -78,7 +112,7 @@ export default function AdminStudents() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {students.map((s) => (
+            {filteredStudents.map((s) => (
               <TableRow key={s.id}>
                 <TableCell>{s.studentId}</TableCell>
                 <TableCell>{s.fullName}</TableCell>
@@ -131,7 +165,19 @@ export default function AdminStudents() {
             </Grid>
             {!editing && (
               <Grid item xs={12}>
-                <TextField label="Password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth size="small" />
+                <TextField
+                  label="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth size="small"
+                  type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" size="small">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               </Grid>
             )}
             {editing && (

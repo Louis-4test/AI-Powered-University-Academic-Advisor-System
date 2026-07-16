@@ -3,10 +3,13 @@ import {
   Box, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions,
   TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, IconButton, CircularProgress, Alert, MenuItem, Grid,
+  InputAdornment,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { getLecturers, createLecturer, updateLecturer, deleteLecturer } from '../../api/lecturers';
 import { getDepartments } from '../../api/departments';
 
@@ -20,6 +23,9 @@ export default function AdminLecturers() {
   const [form, setForm] = useState(emptyLecturer);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [searchName, setSearchName] = useState('');
+  const [searchDept, setSearchDept] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -53,6 +59,12 @@ export default function AdminLecturers() {
 
   if (loading) return <CircularProgress />;
 
+  const filteredLecturers = lecturers.filter((l) => {
+    const matchesName = !searchName || l.fullName?.toLowerCase().includes(searchName.toLowerCase()) || l.email?.toLowerCase().includes(searchName.toLowerCase());
+    const matchesDept = !searchDept || String(l.departmentId) === searchDept;
+    return matchesName && matchesDept;
+  });
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -60,6 +72,27 @@ export default function AdminLecturers() {
         <Button variant="contained" startIcon={<AddIcon />} onClick={openCreate}>Add Lecturer</Button>
       </Box>
       {error && <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError('')}>{error}</Alert>}
+
+      <Box display="flex" gap={2} mb={2}>
+        <TextField
+          placeholder="Search by name or email..."
+          size="small"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          sx={{ minWidth: 250 }}
+        />
+        <TextField
+          select
+          size="small"
+          label="Department"
+          value={searchDept}
+          onChange={(e) => setSearchDept(e.target.value)}
+          sx={{ minWidth: 200 }}
+        >
+          <MenuItem value="">All Departments</MenuItem>
+          {departments.map((d) => <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>)}
+        </TextField>
+      </Box>
 
       <TableContainer component={Paper}>
         <Table>
@@ -76,7 +109,7 @@ export default function AdminLecturers() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {lecturers.map((l) => (
+            {filteredLecturers.map((l) => (
               <TableRow key={l.id}>
                 <TableCell>{l.lecturerId}</TableCell>
                 <TableCell>{l.fullName}</TableCell>
@@ -124,7 +157,19 @@ export default function AdminLecturers() {
             </Grid>
             {!editing && (
               <Grid item xs={12}>
-                <TextField label="Password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth size="small" />
+                <TextField
+                  label="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required fullWidth size="small"
+                  type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" size="small">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               </Grid>
             )}
           </Grid>
