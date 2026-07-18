@@ -101,9 +101,12 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public Map<Integer, Long> getStudentCountByLevel() {
+    public Map<String, Long> getStudentCountByLevel() {
         return studentRepository.findAll().stream()
-                .collect(Collectors.groupingBy(Student::getCurrentLevel, Collectors.counting()));
+                .filter(s -> s.getCurrentLevel() != null)
+                .collect(Collectors.groupingBy(
+                        s -> s.getCurrentLevel().getLabel(),
+                        Collectors.counting()));
     }
 
     public Map<String, Long> getStatusDistribution() {

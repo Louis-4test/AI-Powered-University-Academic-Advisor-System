@@ -30,7 +30,8 @@ public class Course extends BaseEntity {
     @Column(nullable = false)
     private Integer creditHours;
 
-    private Integer level;             // 100, 200, 300, 400
+    @Enumerated(EnumType.STRING)
+    private StudentLevel level;
 
     private String semester;           // FIRST, SECOND
 
