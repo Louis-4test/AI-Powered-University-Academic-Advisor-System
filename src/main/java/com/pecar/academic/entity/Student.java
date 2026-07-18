@@ -38,8 +38,9 @@ public class Student extends BaseEntity {
     @Column(name = "enrollment_year")
     private Integer enrollmentYear;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "current_level")
-    private Integer currentLevel;      // e.g. 100, 200, 300, 400
+    private StudentLevel currentLevel;
 
     @Column(name = "program_name")
     private String programName;        // e.g. B.Sc. Computer Science

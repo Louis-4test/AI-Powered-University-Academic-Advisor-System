@@ -1,5 +1,6 @@
 package com.pecar.academic.dto;
 
+import com.pecar.academic.entity.StudentLevel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +11,7 @@ public class LecturerStudentDTO {
     private String studentNumber;
     private String fullName;
     private String email;
-    private Integer currentLevel;
+    private StudentLevel currentLevel;
     private String programName;
     private String departmentName;
     private Long courseId;

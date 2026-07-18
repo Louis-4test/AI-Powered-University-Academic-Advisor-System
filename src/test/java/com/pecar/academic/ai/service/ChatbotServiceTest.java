@@ -2,6 +2,7 @@ package com.pecar.academic.ai.service;
 
 import com.pecar.academic.ai.dto.ChatbotDTO;
 import com.pecar.academic.entity.*;
+import com.pecar.academic.entity.StudentLevel;
 import com.pecar.academic.exception.ResourceNotFoundException;
 import com.pecar.academic.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +58,7 @@ class ChatbotServiceTest {
     @Test
     void ask_withStudentId() {
         Student student = Student.builder().id(1L).firstName("John").lastName("Doe")
-                .studentId("STU-001").programName("CS").currentLevel(300)
+                .studentId("STU-001").programName("CS").currentLevel(StudentLevel.B_TECH)
                 .department(Department.builder().id(1L).name("CS").build())
                 .build();
 

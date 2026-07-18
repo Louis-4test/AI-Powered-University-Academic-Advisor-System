@@ -178,34 +178,34 @@ public class DataSeeder implements CommandLineRunner {
         Lecturer tanyi    = byEmail(lecturers, "d.tanyi@pecar.edu");
         Lecturer fon      = byEmail(lecturers, "p.fon@pecar.edu");
 
-        record CourseSeed(String code, String title, String desc, int credits, int level,
+        record CourseSeed(String code, String title, String desc, int credits, StudentLevel level,
                            String semester, Department dept, Lecturer lecturer) {}
 
         List<CourseSeed> seeds = List.of(
                 new CourseSeed("CS101", "Introduction to Programming",
-                        "Fundamentals of programming using Java", 4, 100, "FIRST", cs, louis),
+                        "Fundamentals of programming using Java", 4, StudentLevel.HND1, "FIRST", cs, louis),
                 new CourseSeed("CS201", "Data Structures and Algorithms",
-                        "Core data structures, complexity analysis", 4, 200, "FIRST", cs, etienne),
+                        "Core data structures, complexity analysis", 4, StudentLevel.HND2, "FIRST", cs, etienne),
                 new CourseSeed("CS301", "Object-Oriented Software Engineering",
-                        "OOP design, patterns, and large-scale system architecture", 4, 300, "FIRST", cs, louis),
+                        "OOP design, patterns, and large-scale system architecture", 4, StudentLevel.B_TECH, "FIRST", cs, louis),
                 new CourseSeed("CS302", "Database Management Systems",
-                        "Relational design, SQL, and transactions", 3, 300, "SECOND", cs, etienne),
+                        "Relational design, SQL, and transactions", 3, StudentLevel.B_TECH, "SECOND", cs, etienne),
                 new CourseSeed("CS401", "Artificial Intelligence",
-                        "Search, ML fundamentals, and intelligent agents", 4, 400, "FIRST", cs, ngozi),
+                        "Search, ML fundamentals, and intelligent agents", 4, StudentLevel.M_TECH1, "FIRST", cs, ngozi),
                 new CourseSeed("CS402", "Machine Learning",
-                        "Supervised/unsupervised learning and model evaluation", 4, 400, "SECOND", cs, ngozi),
+                        "Supervised/unsupervised learning and model evaluation", 4, StudentLevel.M_TECH1, "SECOND", cs, ngozi),
                 new CourseSeed("EE101", "Circuit Theory",
-                        "DC/AC circuit analysis fundamentals", 4, 100, "FIRST", ee, folefac),
+                        "DC/AC circuit analysis fundamentals", 4, StudentLevel.HND1, "FIRST", ee, folefac),
                 new CourseSeed("EE301", "Control Systems Engineering",
-                        "Feedback systems, stability, and controller design", 3, 300, "SECOND", ee, achu),
+                        "Feedback systems, stability, and controller design", 3, StudentLevel.B_TECH, "SECOND", ee, achu),
                 new CourseSeed("BA101", "Principles of Management",
-                        "Foundations of organizational management", 3, 100, "FIRST", ba, tanyi),
+                        "Foundations of organizational management", 3, StudentLevel.HND1, "FIRST", ba, tanyi),
                 new CourseSeed("BA301", "Corporate Finance",
-                        "Capital budgeting, valuation, and financial strategy", 3, 300, "FIRST", ba, mballa),
+                        "Capital budgeting, valuation, and financial strategy", 3, StudentLevel.B_TECH, "FIRST", ba, mballa),
                 new CourseSeed("MTH201", "Linear Algebra",
-                        "Vector spaces, matrices, and linear transformations", 3, 200, "FIRST", mth, fon),
+                        "Vector spaces, matrices, and linear transformations", 3, StudentLevel.HND2, "FIRST", mth, fon),
                 new CourseSeed("MTH301", "Probability and Statistics",
-                        "Probability theory and statistical inference", 3, 300, "SECOND", mth, fon)
+                        "Probability theory and statistical inference", 3, StudentLevel.B_TECH, "SECOND", mth, fon)
         );
 
         List<Course> courses = seeds.stream().map(s -> Course.builder()
@@ -230,25 +230,25 @@ public class DataSeeder implements CommandLineRunner {
         Department ba  = byCode(departments, "BA");
         Department mth = byCode(departments, "MTH");
 
-        record StudentSeed(String first, String last, String email, int level,
+        record StudentSeed(String first, String last, String email, StudentLevel level,
                             int enrollYear, String program, Department dept) {}
 
         List<StudentSeed> seeds = List.of(
-                new StudentSeed("Fola",     "Louis",   "fola.louis@students.pecar.edu",   300, 2023, "B.Sc. Computer Science", cs),
-                new StudentSeed("Ariane",   "Besong",  "ariane.besong@students.pecar.edu", 300, 2023, "B.Sc. Computer Science", cs),
-                new StudentSeed("Junior",   "Ekema",   "junior.ekema@students.pecar.edu",  400, 2022, "B.Sc. Computer Science", cs),
-                new StudentSeed("Hilary",   "Nkemzi",  "hilary.nkemzi@students.pecar.edu", 200, 2024, "B.Sc. Computer Science", cs),
-                new StudentSeed("Gisele",   "Atangana","gisele.atangana@students.pecar.edu",100, 2025, "B.Sc. Computer Science", cs),
-                new StudentSeed("Marcel",   "Ojong",   "marcel.ojong@students.pecar.edu",  300, 2023, "B.Eng. Electrical Engineering", ee),
-                new StudentSeed("Linda",    "Ayuk",    "linda.ayuk@students.pecar.edu",    200, 2024, "B.Eng. Electrical Engineering", ee),
-                new StudentSeed("Desmond",  "Fru",     "desmond.fru@students.pecar.edu",   400, 2022, "B.Eng. Electrical Engineering", ee),
-                new StudentSeed("Carine",   "Mbarga",  "carine.mbarga@students.pecar.edu", 300, 2023, "B.Sc. Business Administration", ba),
-                new StudentSeed("Roland",   "Suh",     "roland.suh@students.pecar.edu",    200, 2024, "B.Sc. Business Administration", ba),
-                new StudentSeed("Brigitte", "Wanji",   "brigitte.wanji@students.pecar.edu", 100, 2025, "B.Sc. Business Administration", ba),
-                new StudentSeed("Eric",     "Tchoua",  "eric.tchoua@students.pecar.edu",   300, 2023, "B.Sc. Mathematics", mth),
-                new StudentSeed("Nadia",    "Epote",   "nadia.epote@students.pecar.edu",   200, 2024, "B.Sc. Mathematics", mth),
-                new StudentSeed("Patrick",  "Ndip",    "patrick.ndip@students.pecar.edu",  400, 2022, "B.Sc. Computer Science", cs),
-                new StudentSeed("Yvonne",   "Atemkeng","yvonne.atemkeng@students.pecar.edu",100, 2025, "B.Sc. Mathematics", mth)
+                new StudentSeed("Fola",     "Louis",   "fola.louis@students.pecar.edu",   StudentLevel.B_TECH, 2023, "B.Sc. Computer Science", cs),
+                new StudentSeed("Ariane",   "Besong",  "ariane.besong@students.pecar.edu", StudentLevel.B_TECH, 2023, "B.Sc. Computer Science", cs),
+                new StudentSeed("Junior",   "Ekema",   "junior.ekema@students.pecar.edu",  StudentLevel.M_TECH1, 2022, "B.Sc. Computer Science", cs),
+                new StudentSeed("Hilary",   "Nkemzi",  "hilary.nkemzi@students.pecar.edu", StudentLevel.HND2, 2024, "B.Sc. Computer Science", cs),
+                new StudentSeed("Gisele",   "Atangana","gisele.atangana@students.pecar.edu",StudentLevel.HND1, 2025, "B.Sc. Computer Science", cs),
+                new StudentSeed("Marcel",   "Ojong",   "marcel.ojong@students.pecar.edu",  StudentLevel.B_TECH, 2023, "B.Eng. Electrical Engineering", ee),
+                new StudentSeed("Linda",    "Ayuk",    "linda.ayuk@students.pecar.edu",    StudentLevel.HND2, 2024, "B.Eng. Electrical Engineering", ee),
+                new StudentSeed("Desmond",  "Fru",     "desmond.fru@students.pecar.edu",   StudentLevel.M_TECH1, 2022, "B.Eng. Electrical Engineering", ee),
+                new StudentSeed("Carine",   "Mbarga",  "carine.mbarga@students.pecar.edu", StudentLevel.B_TECH, 2023, "B.Sc. Business Administration", ba),
+                new StudentSeed("Roland",   "Suh",     "roland.suh@students.pecar.edu",    StudentLevel.HND2, 2024, "B.Sc. Business Administration", ba),
+                new StudentSeed("Brigitte", "Wanji",   "brigitte.wanji@students.pecar.edu", StudentLevel.HND1, 2025, "B.Sc. Business Administration", ba),
+                new StudentSeed("Eric",     "Tchoua",  "eric.tchoua@students.pecar.edu",   StudentLevel.B_TECH, 2023, "B.Sc. Mathematics", mth),
+                new StudentSeed("Nadia",    "Epote",   "nadia.epote@students.pecar.edu",   StudentLevel.HND2, 2024, "B.Sc. Mathematics", mth),
+                new StudentSeed("Patrick",  "Ndip",    "patrick.ndip@students.pecar.edu",  StudentLevel.M_TECH1, 2022, "B.Sc. Computer Science", cs),
+                new StudentSeed("Yvonne",   "Atemkeng","yvonne.atemkeng@students.pecar.edu",StudentLevel.HND1, 2025, "B.Sc. Mathematics", mth)
         );
 
         List<Student> students = new ArrayList<>();
@@ -287,7 +287,7 @@ public class DataSeeder implements CommandLineRunner {
         for (Student student : students) {
             List<Course> matching = courses.stream()
                     .filter(c -> c.getDepartment().getId().equals(student.getDepartment().getId()))
-                    .filter(c -> c.getLevel() <= student.getCurrentLevel())
+                    .filter(c -> c.getLevel() != null && c.getLevel().isAtOrBelow(student.getCurrentLevel()))
                     .toList();
 
             for (Course course : matching) {

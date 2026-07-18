@@ -57,7 +57,7 @@ public class StudentController {
     }
 
     @GetMapping("/stats/by-level")
-    public ResponseEntity<Map<Integer, Long>> statsByLevel() {
+    public ResponseEntity<Map<String, Long>> statsByLevel() {
         return ResponseEntity.ok(studentService.getStudentCountByLevel());
     }
 

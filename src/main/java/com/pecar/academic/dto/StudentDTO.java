@@ -1,6 +1,7 @@
 package com.pecar.academic.dto;
 
 import com.pecar.academic.entity.Student;
+import com.pecar.academic.entity.StudentLevel;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
@@ -31,8 +32,7 @@ public class StudentDTO {
         private Integer enrollmentYear;
 
         @NotNull(message = "Current level is required")
-        @Min(100) @Max(900)
-        private Integer currentLevel;
+        private StudentLevel currentLevel;
 
         private String programName;
         private Long departmentId;
@@ -61,8 +61,7 @@ public class StudentDTO {
         private LocalDate dateOfBirth;
 
         @NotNull(message = "Current level is required")
-        @Min(100) @Max(900)
-        private Integer currentLevel;
+        private StudentLevel currentLevel;
 
         private String programName;
         private Long departmentId;
@@ -82,7 +81,7 @@ public class StudentDTO {
         private String phone;
         private LocalDate dateOfBirth;
         private Integer enrollmentYear;
-        private Integer currentLevel;
+        private StudentLevel currentLevel;
         private String programName;
         private Student.StudentStatus status;
         private Long departmentId;
@@ -99,7 +98,7 @@ public class StudentDTO {
         private String studentId;
         private String fullName;
         private String email;
-        private Integer currentLevel;
+        private StudentLevel currentLevel;
         private Student.StudentStatus status;
         private Double cgpa;
         private Long departmentId;

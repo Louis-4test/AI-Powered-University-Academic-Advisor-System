@@ -79,7 +79,7 @@ public class ChatbotService {
                 : List.of();
 
         List<String> remainingCourses = departmentCourses.stream()
-                .filter(c -> c.getLevel() <= student.getCurrentLevel())
+                .filter(c -> c.getLevel() != null && c.getLevel().isAtOrBelow(student.getCurrentLevel()))
                 .filter(c -> !completedCourseCodes.contains(c.getCourseCode()))
                 .filter(c -> !enrolledCourseCodes.contains(c.getCourseCode()))
                 .map(c -> c.getCourseCode() + " - " + c.getTitle() + " (" + c.getCreditHours() + " credits)")
@@ -93,7 +93,7 @@ public class ChatbotService {
 
                 Student: %s (%s)
                 Program: %s
-                Current level: %d
+                Current level: %s
                 Department: %s
                 Current CGPA: %.2f
                 Completed courses: %s

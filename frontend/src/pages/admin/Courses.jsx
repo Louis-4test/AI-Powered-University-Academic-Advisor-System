@@ -11,7 +11,8 @@ import { getCourses, createCourse, updateCourse, deleteCourse } from '../../api/
 import { getDepartments } from '../../api/departments';
 import { getLecturers } from '../../api/lecturers';
 
-const emptyCourse = { courseCode: '', title: '', description: '', creditHours: 3, level: 100, semester: 'FIRST', departmentId: '', lecturerId: '' };
+const LEVELS = ['HND 1', 'HND2', 'B-TECH', 'M-TECH 1', 'M-TECH 2'];
+const emptyCourse = { courseCode: '', title: '', description: '', creditHours: 3, level: 'HND 1', semester: 'FIRST', departmentId: '', lecturerId: '' };
 
 export default function AdminCourses() {
   const [courses, setCourses] = useState([]);
@@ -146,7 +147,9 @@ export default function AdminCourses() {
               <TextField label="Credit Hours" type="number" value={form.creditHours} onChange={(e) => setForm({ ...form, creditHours: Number(e.target.value) })} fullWidth size="small" />
             </Grid>
             <Grid item xs={12}>
-              <TextField label="Level" type="number" value={form.level} onChange={(e) => setForm({ ...form, level: Number(e.target.value) })} fullWidth size="small" />
+              <TextField select label="Level" value={form.level} onChange={(e) => setForm({ ...form, level: e.target.value })} fullWidth size="small">
+                {LEVELS.map((lv) => <MenuItem key={lv} value={lv}>{lv}</MenuItem>)}
+              </TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField select label="Semester" value={form.semester} onChange={(e) => setForm({ ...form, semester: e.target.value })} fullWidth size="small">

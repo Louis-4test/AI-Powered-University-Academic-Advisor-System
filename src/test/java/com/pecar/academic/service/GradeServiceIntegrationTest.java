@@ -2,6 +2,7 @@ package com.pecar.academic.service;
 
 import com.pecar.academic.dto.GradeDTO;
 import com.pecar.academic.entity.*;
+import com.pecar.academic.entity.StudentLevel;
 import com.pecar.academic.exception.DuplicateResourceException;
 import com.pecar.academic.repository.GradeRepository;
 import org.junit.jupiter.api.Test;
@@ -32,10 +33,10 @@ class GradeServiceIntegrationTest {
         Department dept = em.persist(Department.builder().name("CS").code("CS").build());
         Student student = em.persist(Student.builder()
                 .studentId("STU-TEST-001").firstName("Test").lastName("Student")
-                .email("test@student.com").currentLevel(300).build());
+                .email("test@student.com").currentLevel(StudentLevel.B_TECH).build());
         Course course = em.persist(Course.builder()
                 .courseCode("TEST101").title("Test Course")
-                .creditHours(3).level(300).semester("FIRST")
+                .creditHours(3).level(StudentLevel.B_TECH).semester("FIRST")
                 .department(dept).build());
 
         GradeDTO.Request req = new GradeDTO.Request();
@@ -69,10 +70,10 @@ class GradeServiceIntegrationTest {
         Department dept = em.persist(Department.builder().name("CS").code("CS").build());
         Student student = em.persist(Student.builder()
                 .studentId("STU-TEST-002").firstName("Test").lastName("Student")
-                .email("test2@student.com").currentLevel(300).build());
+                .email("test2@student.com").currentLevel(StudentLevel.B_TECH).build());
         Course course = em.persist(Course.builder()
                 .courseCode("TEST102").title("Test Course 2")
-                .creditHours(3).level(300).semester("FIRST")
+                .creditHours(3).level(StudentLevel.B_TECH).semester("FIRST")
                 .department(dept).build());
 
         GradeDTO.Request req = new GradeDTO.Request();

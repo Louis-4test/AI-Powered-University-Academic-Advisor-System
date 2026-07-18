@@ -2,6 +2,7 @@ package com.pecar.academic.ai.service;
 
 import com.pecar.academic.ai.dto.CareerRecommendationDTO;
 import com.pecar.academic.entity.*;
+import com.pecar.academic.entity.StudentLevel;
 import com.pecar.academic.exception.ResourceNotFoundException;
 import com.pecar.academic.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ class CareerRecommendationServiceTest {
     void setUp() {
         student = Student.builder().id(1L).firstName("John").lastName("Doe")
                 .studentId("STU-001").programName("B.Sc. CS")
-                .currentLevel(300)
+                .currentLevel(StudentLevel.B_TECH)
                 .department(Department.builder().id(1L).name("CS").build())
                 .build();
     }

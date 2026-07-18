@@ -2,6 +2,7 @@ package com.pecar.academic.service;
 
 import com.pecar.academic.dto.StudentDTO;
 import com.pecar.academic.entity.*;
+import com.pecar.academic.entity.StudentLevel;
 import com.pecar.academic.exception.DuplicateResourceException;
 import com.pecar.academic.exception.ResourceNotFoundException;
 import com.pecar.academic.repository.*;
@@ -41,7 +42,7 @@ class StudentServiceTest {
         student = Student.builder()
                 .id(1L).studentId("STU-2025-001")
                 .firstName("John").lastName("Doe").email("john@test.com")
-                .currentLevel(300).status(Student.StudentStatus.ACTIVE)
+                .currentLevel(StudentLevel.B_TECH).status(Student.StudentStatus.ACTIVE)
                 .department(dept)
                 .build();
 
@@ -51,14 +52,14 @@ class StudentServiceTest {
         createReq.setEmail("jane@test.com");
         createReq.setPassword("pass123");
         createReq.setEnrollmentYear(2025);
-        createReq.setCurrentLevel(200);
+        createReq.setCurrentLevel(StudentLevel.HND2);
         createReq.setDepartmentId(1L);
 
         updateReq = new StudentDTO.UpdateRequest();
         updateReq.setFirstName("John");
         updateReq.setLastName("Doe Updated");
         updateReq.setEmail("john.updated@test.com");
-        updateReq.setCurrentLevel(400);
+        updateReq.setCurrentLevel(StudentLevel.M_TECH1);
     }
 
     @Test
@@ -150,13 +151,13 @@ class StudentServiceTest {
 
     @Test
     void getStudentCountByLevel() {
-        Student s2 = Student.builder().id(2L).currentLevel(300).build();
-        Student s3 = Student.builder().id(3L).currentLevel(200).build();
+        Student s2 = Student.builder().id(2L).currentLevel(StudentLevel.B_TECH).build();
+        Student s3 = Student.builder().id(3L).currentLevel(StudentLevel.HND2).build();
         when(studentRepository.findAll()).thenReturn(List.of(student, s2, s3));
 
-        Map<Integer, Long> result = studentService.getStudentCountByLevel();
+        Map<String, Long> result = studentService.getStudentCountByLevel();
         assertEquals(2, result.size());
-        assertEquals(2L, result.get(300));
-        assertEquals(1L, result.get(200));
+        assertEquals(2L, result.get("B-TECH"));
+        assertEquals(1L, result.get("HND2"));
     }
 }

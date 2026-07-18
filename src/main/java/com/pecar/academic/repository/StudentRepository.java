@@ -1,6 +1,7 @@
 package com.pecar.academic.repository;
 
 import com.pecar.academic.entity.Student;
+import com.pecar.academic.entity.StudentLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +19,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     boolean existsByStudentId(String studentId);
 
     List<Student> findByDepartmentId(Long departmentId);
-    List<Student> findByCurrentLevel(Integer level);
+    List<Student> findByCurrentLevel(StudentLevel level);
     List<Student> findByStatus(Student.StudentStatus status);
 
     @Query("SELECT s FROM Student s WHERE " +

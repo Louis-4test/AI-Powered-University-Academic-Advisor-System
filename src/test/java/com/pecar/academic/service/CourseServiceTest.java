@@ -2,6 +2,7 @@ package com.pecar.academic.service;
 
 import com.pecar.academic.dto.CourseDTO;
 import com.pecar.academic.entity.*;
+import com.pecar.academic.entity.StudentLevel;
 import com.pecar.academic.exception.DuplicateResourceException;
 import com.pecar.academic.exception.ResourceNotFoundException;
 import com.pecar.academic.repository.*;
@@ -39,7 +40,7 @@ class CourseServiceTest {
 
         course = Course.builder()
                 .id(1L).courseCode("CS101").title("Intro to CS")
-                .creditHours(4).level(100).semester("FIRST")
+                .creditHours(4).level(StudentLevel.HND1).semester("FIRST")
                 .department(dept).lecturer(lecturer)
                 .build();
 
@@ -47,7 +48,7 @@ class CourseServiceTest {
         req.setCourseCode("CS201");
         req.setTitle("Data Structures");
         req.setCreditHours(4);
-        req.setLevel(200);
+        req.setLevel(StudentLevel.HND2);
         req.setSemester("FIRST");
         req.setDepartmentId(1L);
         req.setLecturerId(1L);

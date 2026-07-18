@@ -1,6 +1,7 @@
 package com.pecar.academic.dto;
 
 import com.pecar.academic.entity.Course;
+import com.pecar.academic.entity.StudentLevel;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class CourseDTO {
         @NotNull @Min(1) @Max(6)
         private Integer creditHours;
 
-        private Integer level;
+        private StudentLevel level;
         private String semester;
         private Long departmentId;
         private Long lecturerId;
@@ -34,7 +35,7 @@ public class CourseDTO {
         private String title;
         private String description;
         private Integer creditHours;
-        private Integer level;
+        private StudentLevel level;
         private String semester;
         private Course.CourseStatus status;
         private Long departmentId;

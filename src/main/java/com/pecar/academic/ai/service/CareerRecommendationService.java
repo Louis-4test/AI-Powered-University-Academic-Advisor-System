@@ -97,7 +97,7 @@ public class CareerRecommendationService {
                 Name: %s
                 Program: %s
                 Department: %s
-                Current level: %d
+                Current level: %s
                 CGPA: %.2f
                 Courses taken: %s
                 Grades by course: %s
