@@ -23,6 +23,7 @@ class LecturerServiceTest {
     @Mock private LecturerRepository lecturerRepository;
     @Mock private UserRepository userRepository;
     @Mock private DepartmentRepository departmentRepository;
+    @Mock private TimetableRepository timetableRepository;
     @Mock private PasswordEncoder passwordEncoder;
 
     @InjectMocks private LecturerService lecturerService;

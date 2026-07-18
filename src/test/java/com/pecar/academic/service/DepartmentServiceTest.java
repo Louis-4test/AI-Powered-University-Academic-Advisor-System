@@ -5,6 +5,7 @@ import com.pecar.academic.entity.Department;
 import com.pecar.academic.exception.DuplicateResourceException;
 import com.pecar.academic.exception.ResourceNotFoundException;
 import com.pecar.academic.repository.DepartmentRepository;
+import com.pecar.academic.repository.TimetableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.*;
 class DepartmentServiceTest {
 
     @Mock private DepartmentRepository departmentRepository;
+    @Mock private TimetableRepository timetableRepository;
 
     @InjectMocks private DepartmentService departmentService;
 
