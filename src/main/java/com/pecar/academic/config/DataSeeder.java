@@ -245,10 +245,10 @@ public class DataSeeder implements CommandLineRunner {
                 new StudentSeed("Carine",   "Mbarga",  "carine.mbarga@students.pecar.edu", StudentLevel.B_TECH, 2023, "B.Sc. Business Administration", ba),
                 new StudentSeed("Roland",   "Suh",     "roland.suh@students.pecar.edu",    StudentLevel.HND2, 2024, "B.Sc. Business Administration", ba),
                 new StudentSeed("Brigitte", "Wanji",   "brigitte.wanji@students.pecar.edu", StudentLevel.HND1, 2025, "B.Sc. Business Administration", ba),
-                new StudentSeed("Eric",     "Tchoua",  "eric.tchoua@students.pecar.edu",   StudentLevel.B_TECH, 2023, "B.Sc. Mathematics", me),
-                new StudentSeed("Nadia",    "Epote",   "nadia.epote@students.pecar.edu",   StudentLevel.HND2, 2024, "B.Sc. Mathematics", me),
+                new StudentSeed("Eric",     "Tchoua",  "eric.tchoua@students.pecar.edu",   StudentLevel.B_TECH, 2023, "B.Sc. Mechanical Engineering", me),
+                new StudentSeed("Nadia",    "Epote",   "nadia.epote@students.pecar.edu",   StudentLevel.HND2, 2024, "B.Sc. Mechanical Engineering", me),
                 new StudentSeed("Patrick",  "Ndip",    "patrick.ndip@students.pecar.edu",  StudentLevel.M_TECH1, 2022, "B.Sc. Computer Science", cs),
-                new StudentSeed("Yvonne",   "Atemkeng","yvonne.atemkeng@students.pecar.edu",StudentLevel.HND1, 2025, "B.Sc. Mathematics", me)
+                new StudentSeed("Yvonne",   "Atemkeng","yvonne.atemkeng@students.pecar.edu",StudentLevel.HND1, 2025, "B.Sc. Mechanical Engineering", me)
         );
 
         List<Student> students = new ArrayList<>();

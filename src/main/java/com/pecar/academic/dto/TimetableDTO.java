@@ -1,5 +1,6 @@
 package com.pecar.academic.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pecar.academic.entity.DayOfWeek;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -37,7 +38,9 @@ public class TimetableDTO {
         private Long lecturerId;
         private String lecturerName;
         private DayOfWeek dayOfWeek;
+        @JsonFormat(pattern = "HH:mm")
         private LocalTime startTime;
+        @JsonFormat(pattern = "HH:mm")
         private LocalTime endTime;
         private String room;
         private String location;

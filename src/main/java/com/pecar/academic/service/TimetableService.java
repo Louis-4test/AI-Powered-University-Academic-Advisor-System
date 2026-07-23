@@ -21,7 +21,6 @@ public class TimetableService {
     private final CourseRepository     courseRepository;
     private final LecturerRepository   lecturerRepository;
     private final DepartmentRepository departmentRepository;
-    private final EnrollmentRepository enrollmentRepository;
     private final StudentRepository    studentRepository;
 
     private static final LocalTime[][] TIME_SLOTS = {
@@ -138,13 +137,7 @@ public class TimetableService {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
 
-        Set<Long> enrolledCourseIds = enrollmentRepository.findByStudentId(studentId).stream()
-                .filter(e -> e.getStatus() == Enrollment.EnrollmentStatus.ENROLLED)
-                .map(e -> e.getCourse().getId())
-                .collect(Collectors.toSet());
-
         return timetableRepository.findByDepartmentId(student.getDepartment().getId()).stream()
-                .filter(e -> enrolledCourseIds.contains(e.getCourse().getId()))
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }
@@ -181,8 +174,8 @@ public class TimetableService {
             int dayIdx = i / coursesPerDay % DAYS.length;
             DayOfWeek day = DAYS[dayIdx];
 
-            int slotIdx = daySlotIndex.merge(day, 0, (old, v) -> old + 1) - 1;
-            if (slotIdx >= TIME_SLOTS.length) slotIdx = slotIdx % TIME_SLOTS.length;
+            int slotIdx = daySlotIndex.merge(day, 1, (old, v) -> old + 1) - 1;
+            if (slotIdx < 0 || slotIdx >= TIME_SLOTS.length) slotIdx = Math.floorMod(slotIdx, TIME_SLOTS.length);
 
             LocalTime startTime = TIME_SLOTS[slotIdx][0];
             LocalTime endTime = TIME_SLOTS[slotIdx][1];

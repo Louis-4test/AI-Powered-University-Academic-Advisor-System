@@ -40,7 +40,7 @@ export default function StudentTimetable() {
     <Box>
       <Typography variant="h4" fontWeight="bold" gutterBottom>My Timetable</Typography>
       {timetable.length === 0 ? (
-        <Typography color="text.secondary">No timetable entries for your enrolled courses.</Typography>
+        <Typography color="text.secondary">No timetable has been generated for your department yet.</Typography>
       ) : (
         <TableContainer component={Paper}>
           <Table>
