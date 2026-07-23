@@ -97,8 +97,8 @@ public class DataSeeder implements CommandLineRunner {
                         .description("Power systems, electronics, and control").build(),
                 Department.builder().name("Business Administration").code("BA")
                         .description("Management, finance, and entrepreneurship").build(),
-                Department.builder().name("Mathematics").code("MTH")
-                        .description("Pure and applied mathematics").build()
+                Department.builder().name("Mechanical Engineering").code("ME")
+                        .description("Auto mechanics and Mecatroniques services").build()
         );
         return departmentRepository.saveAll(departments);
     }
@@ -109,7 +109,7 @@ public class DataSeeder implements CommandLineRunner {
         Department cs  = byCode(departments, "CS");
         Department ee  = byCode(departments, "EE");
         Department ba  = byCode(departments, "BA");
-        Department mth = byCode(departments, "MTH");
+        Department me = byCode(departments, "ME");
 
         record LecturerSeed(String first, String last, String email, String qualification,
                              String specialization, Department dept) {}
@@ -130,7 +130,7 @@ public class DataSeeder implements CommandLineRunner {
                 new LecturerSeed("Derrick", "Tanyi", "d.tanyi@pecar.edu", "MBA",
                         "Entrepreneurship", ba),
                 new LecturerSeed("Patience", "Fon", "p.fon@pecar.edu", "PhD",
-                        "Applied Mathematics", mth)
+                        "Applied Mechanics", me)
         );
 
         List<Lecturer> lecturers = new ArrayList<>();
@@ -167,7 +167,7 @@ public class DataSeeder implements CommandLineRunner {
         Department cs  = byCode(departments, "CS");
         Department ee  = byCode(departments, "EE");
         Department ba  = byCode(departments, "BA");
-        Department mth = byCode(departments, "MTH");
+        Department me = byCode(departments, "ME");
 
         Lecturer louis    = byEmail(lecturers, "y.louis@pecar.edu");
         Lecturer ngozi    = byEmail(lecturers, "a.ngozi@pecar.edu");
@@ -202,10 +202,10 @@ public class DataSeeder implements CommandLineRunner {
                         "Foundations of organizational management", 3, StudentLevel.HND1, "FIRST", ba, tanyi),
                 new CourseSeed("BA301", "Corporate Finance",
                         "Capital budgeting, valuation, and financial strategy", 3, StudentLevel.B_TECH, "FIRST", ba, mballa),
-                new CourseSeed("MTH201", "Linear Algebra",
-                        "Vector spaces, matrices, and linear transformations", 3, StudentLevel.HND2, "FIRST", mth, fon),
-                new CourseSeed("MTH301", "Probability and Statistics",
-                        "Probability theory and statistical inference", 3, StudentLevel.B_TECH, "SECOND", mth, fon)
+                new CourseSeed("ME201", "Linear Algebra",
+                        "Time, Speed. Velocity and Acceleration", 3, StudentLevel.HND2, "FIRST", me, fon),
+                new CourseSeed("ME301", "Applied Mechanics",
+                        "Tourq theory and Leanear Motion", 3, StudentLevel.B_TECH, "SECOND", me, fon)
         );
 
         List<Course> courses = seeds.stream().map(s -> Course.builder()
@@ -228,7 +228,7 @@ public class DataSeeder implements CommandLineRunner {
         Department cs  = byCode(departments, "CS");
         Department ee  = byCode(departments, "EE");
         Department ba  = byCode(departments, "BA");
-        Department mth = byCode(departments, "MTH");
+        Department me = byCode(departments, "ME");
 
         record StudentSeed(String first, String last, String email, StudentLevel level,
                             int enrollYear, String program, Department dept) {}
@@ -245,10 +245,10 @@ public class DataSeeder implements CommandLineRunner {
                 new StudentSeed("Carine",   "Mbarga",  "carine.mbarga@students.pecar.edu", StudentLevel.B_TECH, 2023, "B.Sc. Business Administration", ba),
                 new StudentSeed("Roland",   "Suh",     "roland.suh@students.pecar.edu",    StudentLevel.HND2, 2024, "B.Sc. Business Administration", ba),
                 new StudentSeed("Brigitte", "Wanji",   "brigitte.wanji@students.pecar.edu", StudentLevel.HND1, 2025, "B.Sc. Business Administration", ba),
-                new StudentSeed("Eric",     "Tchoua",  "eric.tchoua@students.pecar.edu",   StudentLevel.B_TECH, 2023, "B.Sc. Mathematics", mth),
-                new StudentSeed("Nadia",    "Epote",   "nadia.epote@students.pecar.edu",   StudentLevel.HND2, 2024, "B.Sc. Mathematics", mth),
+                new StudentSeed("Eric",     "Tchoua",  "eric.tchoua@students.pecar.edu",   StudentLevel.B_TECH, 2023, "B.Sc. Mathematics", me),
+                new StudentSeed("Nadia",    "Epote",   "nadia.epote@students.pecar.edu",   StudentLevel.HND2, 2024, "B.Sc. Mathematics", me),
                 new StudentSeed("Patrick",  "Ndip",    "patrick.ndip@students.pecar.edu",  StudentLevel.M_TECH1, 2022, "B.Sc. Computer Science", cs),
-                new StudentSeed("Yvonne",   "Atemkeng","yvonne.atemkeng@students.pecar.edu",StudentLevel.HND1, 2025, "B.Sc. Mathematics", mth)
+                new StudentSeed("Yvonne",   "Atemkeng","yvonne.atemkeng@students.pecar.edu",StudentLevel.HND1, 2025, "B.Sc. Mathematics", me)
         );
 
         List<Student> students = new ArrayList<>();
@@ -339,8 +339,8 @@ public class DataSeeder implements CommandLineRunner {
                 new TtSeed("EE301", DayOfWeek.THURSDAY,  LocalTime.of(11, 30),LocalTime.of(13, 0),  "Room 202"),
                 new TtSeed("BA101", DayOfWeek.FRIDAY,    LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 301"),
                 new TtSeed("BA301", DayOfWeek.FRIDAY,    LocalTime.of(9, 45), LocalTime.of(11, 15), "Room 302"),
-                new TtSeed("MTH201", DayOfWeek.SATURDAY, LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 401"),
-                new TtSeed("MTH301", DayOfWeek.SATURDAY, LocalTime.of(9, 45), LocalTime.of(11, 15), "Room 402")
+                new TtSeed("ME201", DayOfWeek.SATURDAY, LocalTime.of(8, 0),  LocalTime.of(9, 30),  "Room 401"),
+                new TtSeed("ME301", DayOfWeek.SATURDAY, LocalTime.of(9, 45), LocalTime.of(11, 15), "Room 402")
         );
 
         for (TtSeed s : seeds) {

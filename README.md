@@ -9,7 +9,7 @@ A full-stack academic management system with AI capabilities — providing stude
 | Backend   | Java 21, Spring Boot 3.5.13, Spring AI 1.0.9, Spring Security  |
 | Frontend  | React 18, Vite 5, MUI 6, Axios, React Router v6                |
 | Database  | MySQL 8                                                        |
-| AI        | OpenAI (GPT-4o-mini), Gemini (Google GenAI)                     |
+| AI        | Groq (Llama 3.3 70B, OpenAI-compatible API)                    |
 | Testing   | JUnit 5, Mockito, Spring Test                                  |
 | Infra     | Docker, Docker Compose, GitHub Actions                         |
 
@@ -23,7 +23,7 @@ A full-stack academic management system with AI capabilities — providing stude
                            │
                     ┌──────┴───────┐
                     │   AI APIs    │
-                    │ OpenAI/Gemini│
+                     │   Groq API   │
                     └──────────────┘
 ```
 
@@ -83,8 +83,7 @@ npm run dev
 | `DB_USERNAME`      | MySQL username           | `root`                |
 | `DB_PASSWORD`      | MySQL password           | `password`            |
 | `JWT_SECRET`       | JWT signing key          | *(auto-generated)*    |
-| `OPENAI_API_KEY`   | OpenAI API key           | —                     |
-| `GEMINI_API_KEY`   | Google Gemini API key    | —                     |
+| `GROQ_API_KEY`     | Groq API key            | —                     |
 | `SEED_ENABLED`     | Seed demo data on startup| `true`                |
 
 ## Testing

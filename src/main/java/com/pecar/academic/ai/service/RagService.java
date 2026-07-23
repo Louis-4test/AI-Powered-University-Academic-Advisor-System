@@ -21,6 +21,7 @@ public class RagService {
 
     private static final int CHUNK_SIZE = 800;
     private static final int CHUNK_OVERLAP = 150;
+    private static final int MAX_CONTEXT_CHARS = 6000;
 
     private final InMemoryVectorStore vectorStore;
     private final ChatClient chatClient;
@@ -55,9 +56,13 @@ public class RagService {
     public RagDTO.QueryResponse query(RagDTO.QueryRequest request) {
         List<Document> relevantDocs = vectorStore.similaritySearch(request.getQuestion());
 
-        String context = relevantDocs.stream()
+        String fullContext = relevantDocs.stream()
                 .map(d -> d.getText() + "\n(Source: " + d.getMetadata().getOrDefault("source", "unknown") + ")")
                 .collect(java.util.stream.Collectors.joining("\n\n---\n\n"));
+
+        String context = fullContext.length() > MAX_CONTEXT_CHARS
+                ? fullContext.substring(0, MAX_CONTEXT_CHARS) + "\n...[truncated]"
+                : fullContext;
 
         String answer = chatClient.prompt()
                 .user(u -> u.text("""

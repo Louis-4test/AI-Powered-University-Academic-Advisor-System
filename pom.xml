@@ -80,16 +80,10 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Spring AI (OpenAI) -->
+        <!-- Spring AI (OpenAI Starter — used with Groq's OpenAI-compatible API) -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-openai</artifactId>
-        </dependency>
-
-        <!-- Spring AI (Google GenAI Starter) -->
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-model-google-genai</artifactId>
         </dependency>
 
         <!-- .env file loader -->

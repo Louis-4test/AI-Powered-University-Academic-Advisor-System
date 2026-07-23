@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * AI Module 3: Research Assistant.
  *
- * Workflow: PDF upload → text extraction (Apache PDFBox) → OpenAI analysis →
+ * Workflow: PDF upload → text extraction (Apache PDFBox) → LLM analysis →
  * structured summary / key findings / research gaps / future work.
  */
 @Service

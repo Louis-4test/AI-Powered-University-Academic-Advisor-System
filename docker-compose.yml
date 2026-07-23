@@ -35,8 +35,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-password}
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/academic_advisor_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
       JWT_SECRET: ${JWT_SECRET:-3a8f2b1c9d4e7f0a5b6c3d2e1f8a9b0c3a8f2b1c9d4e7f0a5b6c3d2e1f8a9b0c}
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-your-api-key-here}
-      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
       SEED_ENABLED: ${SEED_ENABLED:-true}
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
       MAIL_HOST: ${MAIL_HOST:-smtp.gmail.com}

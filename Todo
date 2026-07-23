@@ -6,12 +6,14 @@ Completed:
   - Seed data with 12 timetable entries across all departments
 - Forgot Password / Reset Password pages (frontend + backend)
 - Lecturer "Students" view (frontend + backend)
-- Gemini API integration:
-  - Added `spring-ai-google-genai` dependency (Spring AI 1.1.8)
-  - Configurable provider selection via `spring.ai.model.chat=openai|google-genai`
-  - AiChatConfig creates provider-specific ChatClient based on property
-  - Gemini config with GEMINI_API_KEY env var support
-  - docker-compose updated to pass GEMINI_API_KEY
+- Groq API integration (via OpenAI-compatible endpoint):
+  - Switched from `spring-ai-google-genai` to `spring-ai-openai` (Spring AI 1.1.8)
+  - Uses Groq's OpenAI-compatible API at `api.groq.com/openai` with Llama 3.3 70B
+  - Configurable provider selection via `spring.ai.model.chat=openai`
+  - AiChatConfig creates ChatClient bean for Groq
+  - Groq config with GROQ_API_KEY env var support
+  - Custom TF-IDF EmbeddingModel for RAG (Groq lacks embedding endpoints)
+  - docker-compose updated to pass GROQ_API_KEY
 
 Remaining items you may want:
 - RAG System (Bonus feature per requirements doc)

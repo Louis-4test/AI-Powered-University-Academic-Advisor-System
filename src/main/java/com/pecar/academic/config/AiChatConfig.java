@@ -1,7 +1,6 @@
 package com.pecar.academic.config;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,16 +17,7 @@ public class AiChatConfig {
             """;
 
     @Bean
-    @ConditionalOnProperty(name = "spring.ai.model.chat", havingValue = "openai", matchIfMissing = true)
-    public ChatClient openAiChatClient(ChatClient.Builder builder) {
-        return builder
-                .defaultSystem(SYSTEM_PROMPT)
-                .build();
-    }
-
-    @Bean
-    @ConditionalOnProperty(name = "spring.ai.model.chat", havingValue = "google-genai")
-    public ChatClient geminiChatClient(ChatClient.Builder builder) {
+    public ChatClient groqChatClient(ChatClient.Builder builder) {
         return builder
                 .defaultSystem(SYSTEM_PROMPT)
                 .build();
